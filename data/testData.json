@@ -1,0 +1,26 @@
+{
+  "users": {
+    "standard": {
+      "username": "standard_user",
+      "password": "secret_sauce"
+    },
+    "locked": {
+      "username": "locked_out_user",
+      "password": "secret_sauce"
+    },
+    "invalid": {
+      "username": "invalid_user",
+      "password": "invalid_password"
+    }
+  },
+  "checkout": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345"
+  },
+  "invalidCheckout": {
+    "firstName": "",
+    "lastName": "",
+    "postalCode": ""
+  }
+}
