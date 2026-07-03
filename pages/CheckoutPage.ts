@@ -7,59 +7,87 @@ export class CheckoutPage {
     this.page = page;
   }
 
-  private get firstNameInput() {
-    return this.page.locator('[data-test="firstName"]');
+  private get deliveryAddress() {
+    return this.page.locator('#address_delivery');
   }
 
-  private get lastNameInput() {
-    return this.page.locator('[data-test="lastName"]');
+  private get billingAddress() {
+    return this.page.locator('#address_invoice');
   }
 
-  private get postalCodeInput() {
-    return this.page.locator('[data-test="postalCode"]');
+  private get cartItems() {
+    return this.page.locator('#cart_info');
   }
 
-  private get continueButton() {
-    return this.page.locator('[data-test="continue"]');
+  private get commentTextarea() {
+    return this.page.locator('textarea.form-control');
   }
 
-  private get finishButton() {
-    return this.page.locator('[data-test="finish"]');
+  private get placeOrderButton() {
+    return this.page.locator('a[href="/payment"]');
   }
 
-  private get errorMessage() {
-    return this.page.locator('[data-test="error"]');
+  private get nameOnCardInput() {
+    return this.page.locator('[data-qa="name-on-card"]');
+  }
+
+  private get cardNumberInput() {
+    return this.page.locator('[data-qa="card-number"]');
+  }
+
+  private get cvcInput() {
+    return this.page.locator('[data-qa="cvc"]');
+  }
+
+  private get expiryMonthInput() {
+    return this.page.locator('[data-qa="expiry-month"]');
+  }
+
+  private get expiryYearInput() {
+    return this.page.locator('[data-qa="expiry-year"]');
+  }
+
+  private get payAndConfirmButton() {
+    return this.page.locator('[data-qa="pay-button"]');
   }
 
   private get successMessage() {
-    return this.page.locator('[data-test="complete-header"]');
+    return this.page.locator('p').filter({ hasText: 'Congratulations! Your order has been confirmed!' });
   }
 
-  async verifyCheckoutPageIsVisible() {
-    await expect(this.firstNameInput).toBeVisible();
-    await expect(this.lastNameInput).toBeVisible();
-    await expect(this.postalCodeInput).toBeVisible();
+  async verifyCheckoutPageVisible() {
+    await expect(this.deliveryAddress).toBeVisible();
+    await expect(this.billingAddress).toBeVisible();
+    await expect(this.cartItems).toBeVisible();
   }
 
-  async fillCheckoutForm(firstName: string, lastName: string, postalCode: string) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
+  async fillComment(comment: string) {
+    await this.commentTextarea.fill(comment);
   }
 
-  async clickContinue() {
-    await this.continueButton.click();
+  async clickPlaceOrder() {
+    await this.placeOrderButton.click();
   }
 
-  async clickFinish() {
-    await this.finishButton.click();
+  async fillPaymentDetails(
+    nameOnCard: string,
+    cardNumber: string,
+    cvc: string,
+    expiryMonth: string,
+    expiryYear: string
+  ) {
+    await this.nameOnCardInput.fill(nameOnCard);
+    await this.cardNumberInput.fill(cardNumber);
+    await this.cvcInput.fill(cvc);
+    await this.expiryMonthInput.fill(expiryMonth);
+    await this.expiryYearInput.fill(expiryYear);
   }
 
-  async verifyErrorMessage(message: string) {
-    await expect(this.errorMessage).toHaveText(message);
+  async clickPayAndConfirm() {
+    await this.payAndConfirmButton.click();
   }
 
-  async verifySuccessMessage() {
-    await expect(this.successMessage).toHaveText('Thank you for your order!');
+  async verifyOrderSuccess() {
+    await expect(this.successMessage).toBeVisible();
   }
 }

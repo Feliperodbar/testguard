@@ -7,32 +7,23 @@ export class CartPage {
     this.page = page;
   }
 
-  private get cartList() {
-    return this.page.locator('[data-test="cart-list"]');
+  private get cartTable() {
+    return this.page.locator('#cart_info_table');
   }
 
-  private get checkoutButton() {
-    return this.page.locator('[data-test="checkout"]');
-  }
-
-  private get continueShoppingButton() {
-    return this.page.locator('[data-test="continue-shopping"]');
-  }
-
-  private cartItem(productName: string) {
-    return this.page.locator('[data-test="inventory-item-name"]').filter({ hasText: productName });
+  private get proceedToCheckoutButton() {
+    return this.page.locator('.check_out');
   }
 
   async verifyCartPageIsVisible() {
-    await expect(this.cartList).toBeVisible();
-    await expect(this.checkoutButton).toBeVisible();
+    await expect(this.cartTable).toBeVisible();
   }
 
   async verifyProductInCart(productName: string) {
-    await expect(this.cartItem(productName)).toBeVisible();
+    await expect(this.page.locator('.cart_description a').filter({ hasText: productName })).toBeVisible();
   }
 
-  async goToCheckout() {
-    await this.checkoutButton.click();
+  async proceedToCheckout() {
+    await this.proceedToCheckoutButton.click();
   }
 }

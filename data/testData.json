@@ -1,26 +1,36 @@
 {
-  "users": {
-    "standard": {
-      "username": "standard_user",
-      "password": "secret_sauce"
-    },
-    "locked": {
-      "username": "locked_out_user",
-      "password": "secret_sauce"
-    },
-    "invalid": {
-      "username": "invalid_user",
-      "password": "invalid_password"
-    }
-  },
-  "checkout": {
+  "newUser": {
+    "name": "Test User",
+    "email": "testuser_${timestamp}@example.com",
+    "password": "TestPass123!",
+    "day": "15",
+    "month": "May",
+    "year": "1990",
     "firstName": "John",
     "lastName": "Doe",
-    "postalCode": "12345"
+    "company": "Test Corp",
+    "address1": "123 Test Street",
+    "address2": "Apt 4B",
+    "country": "United States",
+    "state": "California",
+    "city": "Los Angeles",
+    "zipcode": "90001",
+    "mobileNumber": "1234567890"
   },
-  "invalidCheckout": {
-    "firstName": "",
-    "lastName": "",
-    "postalCode": ""
+  "registeredUser": {
+    "name": "Existing User",
+    "email": "existing_user@example.com",
+    "password": "ExistingPass123!"
+  },
+  "invalidUser": {
+    "wrongEmail": "wrongemail@example.com",
+    "wrongPassword": "wrongpass",
+    "nonExistentEmail": "nonexistent@example.com"
+  },
+  "checkout": {
+    "comment": "Please deliver between 9 AM and 5 PM"
+  },
+  "search": {
+    "product": "Top"
   }
 }

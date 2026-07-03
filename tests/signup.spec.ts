@@ -2,20 +2,13 @@ import { test, expect } from '../fixtures/testFixtures';
 import testData from '../data/testData.json';
 import { generateUniqueEmail } from '../utils/helpers';
 
-test.describe('Checkout Tests', () => {
-  test('should complete checkout successfully', async ({
-    homePage,
-    loginSignupPage,
-    signupPage,
-    productsPage,
-    cartPage,
-    checkoutPage,
-    accountDeletedPage
-  }) => {
-    // 1. Register new user
+test.describe('Signup Tests', () => {
+  test('should register user successfully', async ({ homePage, loginSignupPage, signupPage, accountDeletedPage }) => {
     const uniqueEmail = generateUniqueEmail(testData.newUser.email);
+    
     await homePage.navigate();
     await homePage.goToSignupLogin();
+    
     await loginSignupPage.fillSignupForm(testData.newUser.name, uniqueEmail);
     await loginSignupPage.clickSignup();
     
@@ -40,38 +33,12 @@ test.describe('Checkout Tests', () => {
       testData.newUser.mobileNumber
     );
     await signupPage.clickCreateAccount();
+    
     await signupPage.verifyAccountCreated();
     await signupPage.clickContinue();
     
-    // 2. Add products to cart
-    await homePage.goToProducts();
-    await productsPage.verifyProductsPageIsVisible();
-    await productsPage.addProductToCart(0);
-    await productsPage.clickContinueShopping();
-    await productsPage.addProductToCart(1);
-    await productsPage.clickViewCart();
+    await homePage.verifyLoggedInAs(testData.newUser.name);
     
-    // 3. Go to checkout
-    await cartPage.verifyCartPageIsVisible();
-    await cartPage.proceedToCheckout();
-    
-    // 4. Verify checkout page and place order
-    await checkoutPage.verifyCheckoutPageVisible();
-    await checkoutPage.fillComment(testData.checkout.comment);
-    await checkoutPage.clickPlaceOrder();
-    
-    // 5. Fill payment details and pay
-    await checkoutPage.fillPaymentDetails(
-      testData.newUser.name,
-      '1234567890123456',
-      '123',
-      '12',
-      '2028'
-    );
-    await checkoutPage.clickPayAndConfirm();
-    await checkoutPage.verifyOrderSuccess();
-    
-    // 6. Delete account
     await homePage.deleteAccount();
     await accountDeletedPage.verifyAccountDeleted();
   });
